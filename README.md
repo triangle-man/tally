@@ -1,2 +1,4 @@
-# budget
-Notes on parsing financial statements
+budget
+======
+
+Sort out my finances.

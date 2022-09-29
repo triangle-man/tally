@@ -1,0 +1,143 @@
+#+title: Bank statements
+#+options: toc:nil
+
+I'd like to be able to download bank statements and dump them in a folder, and
+have the computer generate a financial report for me. The main challenges with
+this are:
+
+- my bank provides only a small amount of information for each transaction. In
+  particular, it can be tricky to figure out what each transaction was for.
+
+- when I transfer money between accounts the two sides of the transaction do not
+  have a common identifier.
+
+- sometimes I pay for a household expense on my credit card, and then transfer
+  the same amount of money from the joint account to my personal account: the
+  transaction turns up in the joint account, but only the credit card statement
+  shows what the transaction was for.
+
+So I would like the system to do the following:
+
+1. Read and parse a collection of downloaded bank statemetns in a folder
+
+2. Deduplicate any transactions that are present more than once. This will occur
+   if the transactions were overlapping.
+
+3. Check total balances to check for missing transactions.
+
+4. Match transactions that are part of the same split
+
+5. Classify transactions according to a chart of accounts. 
+
+6. Allow for an "override" file of transactions that have been correctly classified by
+   the user
+
+7. Maintain a little language of classifiers, probably probabilistic
+
+8. Produce monthly reports
+
+9. Support budgeting
+
+
+
+** How do we budget?
+
+A budget is both a guide (for discretionary expenditure) and an explanation of
+why the future was not what we thought.
+
+We can think of the budget as a set of transactions that occur in the /next/
+period. After the period, we look at the difference between budget and actuals
+to explain what happened.
+
+** Accounting for expenses
+
+In my current approach to domestic finances, I try to make sure there is
+sufficient money set aside to cover expenses that are likely while reducing
+budget for particular categories that have been overspent. I use some home-grown
+system which effectively "capitalises" mismatches between budgets and actuals,
+for differing budgeting periods. It is confusing. The following is the new plan.
+
+*** Bills
+
+Some bills (which ones?) are invoiced in arrears. Since I am actually consuming
+the service I have definitely incurred the cost; it's just that it hasn't left
+my account yet. These ought to be expensed and transferred to a provision (which
+is a liability).
+
+*** Annual insurance
+
+These come round every June or so and should not be a surprise. They are paid in
+advance. Perhaps the best way is to capitalise the cost and then amortise the
+expense over the year, as if the insurance contract is an asset that is
+depreciating. That will "inflate" my net worth (because it will look like I have
+an asset which I can't really convery to cash) but at least I won't be surprised
+by a sudden change in net worth in June. The only real problem will be if total
+cash on hand is near zero.
+
+*** Quarterly expenses
+
+eg, Clothes, Diesel, Rail travel, stuff for house, School expenses. This is the
+difficult category. How do I want a budget and an expense report to work, for
+something with a "quarterly" budget of 3, say?
+
+1. I'd like to be able to "explain" monthly changes in net worth as due to
+   "spending more than budget on groceries" (for example);
+
+2. Except that I don't need to explain anything if I'm "within budget for a
+   three-month period."
+
+3. I'd like to know, now, how much I have available this month, including carry
+   over (or payback).
+
+Proposal: Let b be the monthly budget and C the total carry-over.
+
+1. The budget for month 0, 1, 2, is b per month; the carry C starts at 0 at T
+   = 0.
+
+2. For costs of s this month, the carry next month is C + (b - s). Note that
+   this may be more or less than C. We expense s and take b - s from savings to
+   the carry.
+
+3. If the carry would be below zero at the beginning of the next month, then it
+   is set to zero and the difference expensed immediately (thus affecting
+   savings right now).
+
+4. Otherwise the balance of C at the end of the quarter is reset to zero and the
+   balance taken to savings. 
+
+*** Sinking funds
+
+However, there are other kinds of payment that I am pretty sure I want to be
+able to make but which I don't actually /have/ to make. These are things like
+Christmas presents, holidays, perhaps even to some extent clothes and car
+repairs. For these, I want to "save up" so that I am able to afford whatever it
+is at some point in the future---but I'm not actually incurring a liability.
+
+These are "equity asset" accounts. 
+
+
+
+** Notes
+
+What kinds of account are there?
+
+1. Me (ie, equity): the source/sink of "physical income/expense" (ie, doing work
+   or consumption).
+
+2. Stuff (including cash, bank accounts, and loans): Things owned by me to keep
+   track of the mismatch between income and expense.
+
+3. Nominal income: where non-immediate income goes;
+
+4. Nominal expense: where non-immediate expense goes.
+
+Each of these have "debit" versions and "credit" versions:
+#+begin_verse
+        Dr                 Cr
+Me      !                  -Net worth
+Stuff   +Asset             -Loan
+NI      +Acts Receivable   -Payment on account
+NE      +Pre-paid expense  -Acts Payable
+#+end_verse 
+
+
