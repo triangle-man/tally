@@ -1,0 +1,67 @@
+#+title: Budgeting
+
+Notes on a proposed system of personal finance which (a) is equivalent
+to double-entry book-keeping; (b) has transactions as primary, rather
+than accounts; (c) has some advantages for budgeting.
+
+1. Fix a finite set of /persons/, representing the people and
+   institutions in the world who might receive or provide goods,
+   services, or favours to me.
+
+2. A /favour/ is the provision of a good, or service, to our by
+   me. Favours are measured in pounds. The “value” of the favour is
+   the same to both persons. The /time/ of a favour is an interval of
+   time in which the favour is /known/ to have occured. The smallest
+   unit of time is a day. The time may have no upper or lower
+   bound. Note that the time of a favour is not time-independent!
+   
+3. A /transaction/ is a bundle of favours, not necessarily at the same
+   time, whose sum is zero for each person.
+
+4. Thus, integrated over all time and over all persons, the net balance of
+   favours is zero. 
+
+5. The net balance of favours for me, integrated over all time, is
+   zero. (TODO: Is this true of all persoms?)
+
+6. At a particular time, the balance of favours for a given person
+   (eg, me) may be non-zero.
+
+7. 
+
+
+
+** Examples
+
+For these examples, imagine looking at the timeline /sub specie
+aeternitatis/. On this view, all favours have finite time, since all
+transactions will have happened.
+
+*** ACT I
+
+/Dramatis personae:/ Me, Bob.
+
+Bob gives me an apple today; I wash Bob's window tomorrow. In the
+market, apples cost £1, as do windows washed.
+
+Self-directed transaction:
+- Today -£1 : Bob (memo: apple)
+- Tomorrow £1 : Bob (memo: window)
+
+General transaction:
+- Today £1 : (Bob, Self) (memo: apple)
+- Tomorrow £1 : (Self, Bob) Bob memo: window)
+
+*** ACT II
+
+/Dramatis personae:/ Me, Bob, Anna.
+
+I wash Anna's window today. Bob gives me an apple tomorrow. I tell
+Anna to owe Bob.
+
+Self-directed transaction:
+- Today: £1: Anna; Someday: -£1: Anna.
+- Tomorrow: -£1: Bob ; Someday: £1: Bob
+- 
+
+  
