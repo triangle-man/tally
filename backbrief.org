@@ -1,17 +1,19 @@
 #+title: Bank statements
 #+options: toc:nil
 
+* Overview
+
 I'd like to be able to download bank statements and dump them in a folder, and
 have the computer generate a financial report for me. The main challenges with
 this are:
 
-- my bank provides only a small amount of information for each transaction. In
-  particular, it can be tricky to figure out what each transaction was for.
+- My bank provides only a small amount of information for each transaction. It
+  can be tricky to figure out what each transaction was for.
 
-- when I transfer money between accounts the two sides of the transaction do not
-  have a common identifier.
+- When I transfer money between accounts the two sides of the transaction do not
+  (always) have a common identifier.
 
-- sometimes I pay for a household expense on my credit card, and then transfer
+- Sometimes I pay for a household expense on my credit card, and then transfer
   the same amount of money from the joint account to my personal account: the
   transaction turns up in the joint account, but only the credit card statement
   shows what the transaction was for.
@@ -38,9 +40,304 @@ So I would like the system to do the following:
 
 9. Support budgeting
 
+* Conventional accounting
+
+** Cash accounting
+
+I keep my money in several places: in cash, in a current account, in
+an ISA. I have a credit card which is /like/ a place to keep money, in
+the sense that it has a balance. In some sense, a place just is a
+balance, together with any constraints on allowed balances (such as
+being non-negative). Occasionally money flows between those places, or
+out of a place entirely (when I buy something), or into a place from
+somewhere else (when I get paid).
+
+A first approach to keeping track of my finances is to monitor the
+inflows and outflows of money to and from those places. Some places
+will send me a history of the inflows and outflows; others I have to
+keep track myself. Either way, knowledge of the flows allows me to
+compute the balance associated with each place at each time. 
+
+If I get this right, I will learn two things:
+1. How much money is in all the places right now; and
+2. How much I have spent and received over some historical period.
+
+These are useful things to know. A bad thing might happen if the
+balance in a place falls below zero; or if the sum of all balances is
+less than zero. I should start to be concerned if such a balance is
+small. If I am considering a large purchase, I should ensure that some
+balance is currently larger than the cost of the purchase, lest that
+value fall below zero after the purchase. When looking back, I might
+consider some recurring expense too large and resolve to reduce it in
+future.
+
+A /budget/ is an estimate of /future/ flows. Given a budget, I can
+estimate future balances and thus ensure that the bad thing looks
+unlikely in the future.
 
 
-** How do we budget?
+
+
+
+
+
+
+** Conventional accounting
+
+
+
+
+In conventional accounting, the state of the system at time $t$ is given by the
+values of a set of /accounts/, traditionally divided into a set of /debit
+accounts/, $\{D^{(1)}, D^{(2)},\dotsc\}$ and a set of /credit accounts/
+$\{C^{(1)}, C^{(2)}, \dotsc\}$. At each time $t$, there is given a set of
+/transactions/, where a transaction is a value $\delta D^{(i)}_t$ for each debit
+account and $\delta C^{(i)}_t$ for each credit account; all such that
+$\sum_i\delta D^{(i)}_t = \sum_i\delta C^{(i)}_t$. The values of the accounts at
+time $t+1$ are $D^{(i)}_{t+1} = D^{(i)}_{t} + \sum_\delta \delta D^{(i)}_t$ and
+$C^{(i)}_{t+1} = C^{(i)}_t + \sum_\delta \delta C^{(i)}_t$ respectively, and the
+$\sum_\delta$ is poor notation for ``sum over all the transactions.''. Note that
+it follows that $\sum_i (D^{(i)}_{t+1} - D^{(i)}_t) = \sum_i (C^{(i)}_{t+1} -
+C^{(i)}_t)$ and hence that the quantity $\sum_i (D^{(i)}_t - C^{(i)}_t)$ is
+invariant.
+
+Accounts are also divided into /real accounts/ and /nominal accounts/. The
+nominal accounts represent income and expense and the real accounts represent
+assets and liabilities. Typically, though not always, the debit accounts are
+assets and expenses; and the credit accounts are liabilities and
+income. (Exceptions include accumulated depreciation, which is a real credit
+account but is usually recorded as an asset.)
+
+The /balance sheet/ reports only the real accounts but is nonetheless supposed
+to balance. How does that work? What happens is that the net total of the
+nominal accounts is moved to what we pretend is a liability called ``equity.''
+
+** Issues with conventional accounting
+
+1. There sure are a lot of two-way splits: why real vs nominal? why debit vs
+   credit? Why transactions vs accounts?
+
+2. Accounts capture the state at a certain time and are primary in this story;
+   but transactions are ``really'' what happens and surely are primary in real
+   life?
+
+3. Is there a distinction between ``real, physical asset'' and ``money owed to
+   me by someone''? Real, physical assets have odd properties, like being harder
+   to value.
+
+4. The equity story is weird.   
+
+5. What is the connection between the mathematical story and reality? How does
+   one obtain transactions? 
+
+6. Sometimes I don't know the exact time $t$ at which a transaction might be
+   said to have occured. For example, I might get an electricity bill for a
+   period of several months. Or, I might have a productive asset but I don't
+   quite know the envelope of its future production.
+
+7. How does budgeting fit into this? Budgets are future transactions. 
+
+** Thoughts on an alternative
+
+1. All balances start at $0$. We can always recover the balance of an account
+   $A$ at some time $T$ by $A_T = \sum_{t < T}\delta A_t$.
+
+   
+
+
+* A theory of accounting suitable for my domestic finances
+
+Fundamentally, accounting is about saying what we can about the future knowing
+the past.
+
+We imagine that time is a sequence of discrete timesteps (eg, days). My
+household does two things each timestep: (1) consumes something (generating
+utility!); (2) produces something (generating utility for someone else).
+
+By convention, both consumption and production are valued in units of money.
+Write $C_t$ and $P_t$ for consumption and production respectively in timestep
+$t$ in the conventional units. The general rule of life is that, in the long
+run, total consumption equals total production in those units.[fn:1] That is,
+\begin{equation}
+\sum_{t = -\infty}^{\infty} C_t = \sum_{t = -\infty}^{\infty} P_t 
+\end{equation}
+
+Suppose we are at $t=0$ (which I will take to be the /end/ of period zero, so
+that $P_0$, say, has already happened). Then we have the following identity:
+\begin{equation}
+\sum_{t \leq 0} (P_t - C_t) = \sum_{t >0} (C_t - P_t). 
+\end{equation}
+
+That is, total production minus total consumption in the past is equal to total
+consumption minus total production in the future.[fn:4] Oddly, though, we give
+these two equivalent things different names. The thing in the past is called
+/net worth/ whereas the thing in the future is called /net assets/. One may
+wonder /why/ there are two things and the answer is because they are decomposed
+in different ways: one is about production and consumption in the past and the
+other is about the future. Net assets is my total future consumption if there
+were no future production.[fn:2] Thus the past tells us a little bit about the
+future.[fn:3]
+
+How is the long-run rule maintained? One way is to imagine that I write down the
+\(P_t\)s and \(C_t\)s on a piece of paper and simply keep track of the
+balance. Everyone else does the same thing, and somehow we all agree to make
+sure things zero out.
+
+Another plan is that we exchange tokens. When I do something productive, I get
+tokens from the consumer (this is called ``income''); and when I consume
+something, I give the tokens to the producer (``expense''). In the meantime, I
+hold on to the tokens. (Alternatively, I could give the tokens to someone else,
+such as bank, to hold on to for me.)
+
+Annoyingly, it might nonetheless happen that the exchange of tokens doesn't
+happen at exactly the same time as the production or consumption. For example, I
+work each day during the month but my employer doesn't hand over the tokens
+until the end of the month. (Or perhaps I am paid an advance, the work for which
+I am then liable.) So we still need the paper to keep track of, say, my
+consumption until I transfer the tokens.
+
+It's usual to keep track of the paper mismatches for production and consumption
+separately and to distinguish positive from negative mismatches (the mismatch is
+labelled ``Dr.'' when a positive balance is an asset; contrariwise for ``Cr.''):
+
+|             | Dr.                 | Cr.                |
+|-------------+---------------------+--------------------|
+| Production  | Accounts receivable | Payment on account |
+| Consumption | Pre-paid expenses   | Accounts payable   |
+
+It's also usual to say that I ``received'' the income at the time that $P_t$ was
+produced, rather than when the tokens were transferred; likewise for expense.
+
+The token store is like an option on future consumption. Apple trees are also
+like an option on future consumption: Apple trees produce apples, which can be
+consumed. However, the apples aren't given to me by a producer so how are we to
+agree on a value? Suppose I buy an apple tree for $C$ at $t=0$, say, and eat
+apples at times $t_1$, $t_2$, and $t_3$, after which it dies. What does this
+mean for $C_t$?  How do things look at the end of $t=0$? There are several
+options:
+
+1. One way is to pretend that I consumed the tree when I bought it. Then I need
+   to decide how to account for the apples.
+
+   1. I pretend that there are no apples (equivalently, that consuming the tree
+      is consuming the apples). I record consumption (and expense) at $t=0$ for
+      whatever I paid for the tree and ignore the apples themselves (this is
+      called ``cash accounting.'')
+      
+      This approach certainly records the past but it is less than helpful when
+      telling me about the future since future apple consumption is
+      ignored. 
+     
+   2. I accept that there are apples but treat their arrival as a complete
+      surprise, unconnected to the tree (which, after all, was completely
+      consumed at $t=0$ on this story). When an apple arrives, I count the
+      creationg of the apple as ``production'' (admittedly one that took me no
+      work) and record both its production and consumption at that time.
+
+      This approach has a huge problem, which is that I need to decide how to
+      value each apple in money. Since I'm both the producer and consumer of the
+      apple I could in principle assign it any value I like (c.f., ``transfer
+      pricing''). My income and expenses will fluctuate wildly in the future,
+      albeit in an offsetting way.
+
+      Now, there might exist a liquid market for apples. If one does, I could
+      choose to sell the apples on that market. In that case, I could imagine
+      that I sell the apple and immediately buy it back and there is an
+      objective valuation.
+
+2. I pretend that buying the tree is not consumption but is another kind of
+   deferred consumption, like tokens or pieces of paper. On this version, my net
+   worth at the end of $t = 0$ ``includes'' the cost of the apple tree (because
+   I later get to eat the apples). That's true automatically because, since I
+   didn't record the purchase of the tree as consumption, there will be more
+   production than consumption until I eat the apples.
+
+   This approach tries to say something about my future ability to consume. How
+   and when, though, should we account for consumption of the apples?
+
+   1. I might imagine that the tree /just is/ a certain number of apples: the
+      number it will ever produce. I divide the cost of the tree by the number
+      of apples and record consumption of each apple at $t_1$, $t_2$, etc.
+
+      This approach can work when the number of future apples is fixed and known
+      in advance. That's not true of apple trees but some assets /are/ like
+      this. For example, tokens are exactly like this: a collection of tokens
+      just is that number of tokens; and we know exactly how much each token is
+      valued at (it is one unit).
+
+      Gold is a little like this. There is a liquid market for gold, so we can
+      use the market-based valuation method. But the value of gold does
+      change. If the value of gold goes up, we record an excess production each
+      time we ``use'' the gold.
+
+   2. I might imagine that the tree has a finite /lifetime/, and is ``used up''
+      just by existing over that lifetime. In this case I record consumption
+      each period and, again, ignore the apples -- unless I am selling them, in
+      which case I count that as production.
+
+      This is called ``accrual accounting'' and the amount I decide to apportion
+      to consumption each period is called ``depreciation'' (or ``amortisation''
+      if it's a service).
+      
+      One case where this works well is when I have paid upfront for some annual
+      service. In that case, there is a real lifetime and it is known. 
+
+
+** The problem with unbounded futures
+
+In principle, we might imagine a sequence of production and consumption
+stretching into the future. We ``add them all up'' and then that's net
+worth. But there are two problems. One is that the future is unknown and the
+other is that both future consumption and future production are very large
+numbers: it's only their difference that is already clear.
+
+** Connections between transactions
+
+One way of understanding accounts is as a set of productions and consumptions,
+summing to zero.
+
+
+
+An /account/ is a 
+
+** Assets and bank accounts
+
+
+
+** Transactions whose exact date is unknown
+
+** Budgeting
+
+A budget is a plan. We want to check:
+1. What the plan is for ``the next period'' 
+2. That we have ``enough saved to pay likely bills''
+3. What happened ``last period''
+
+Okay, so ... maybe ``is my net worth decreasing?'' is a different question from
+``will I have enough money in the bank?''. The latter is a forecasting question,
+the former is about getting past consumption and production correct.
+
+It would be nice to be able to choose what the period is on the fly. Eg, ``this
+financial year'' or ``this calendar month'' or ``until the end of this year'' or
+``the next twelve months.''
+
+Some consumption entries are a guess. For example, electricity bills are really
+a guess until the meter gets read. It may be the case that we never know when
+the consumption occurred, just a period. 
+
+What I'd like is this. Next year, I know I will have a bill (in June, say) to
+pay for a service for the following year (insurance, say). I'd like
+- my "net worth" (meaning "how much can I just spend without worrying") to not
+  suddently drop when the bill comes in.
+- to know that I will have sufficient cash in the bank
+- my monthly expenses not to spike
+
+  
+
+** Keeping within budget
+
+
+** (OLD) How do we budget?
 
 A budget is both a guide (for discretionary expenditure) and an explanation of
 why the future was not what we thought.
@@ -117,19 +414,68 @@ These are "equity asset" accounts.
 
 
 
-** Notes
+
+
+* Chart of Accounts
+
+- Household consumables
+  - Sainsburys
+  - Aldi
+  - Lidl
+  - TK Maxx
+  - Waitrose
+  - Boots
+  - Costcutter
+    
+- Household non-consumable
+  - Screwfix
+  - Wilko
+  - Argos
+
+- Clothes
+
+- Tfl
+
+- Eating out
+  
+- Rail
+
+- Other entertainment
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 What kinds of account are there?
 
-1. Me (ie, equity): the source/sink of "physical income/expense" (ie, doing work
-   or consumption).
+1. Me (ie, equity): the source/sink of "real" income/expense (ie, doing work or
+   consumption).
 
-2. Stuff (including cash, bank accounts, and loans): Things owned by me to keep
-   track of the mismatch between income and expense.
+2. Stuff (including cash, bank accounts, and loans): Things owned by me,
+   denominated in pounds, to keep track of the mismatch between real income and
+   real expense.
 
-3. Nominal income: where non-immediate income goes;
+3. Nominal income: where non-immediate income goes. To keep track of the
+   mismatch between real income and stuff. (ie, I've done the work, but they
+   haven't paid me yet.)
 
-4. Nominal expense: where non-immediate expense goes.
+4. Nominal expense: where non-immediate expense goes. To keep track of the
+   mismatch between real expense and stuff. (ie, I've paid for the thing from
+   stuff, but I haven't got the benefit yet.) Depreciating assets go here? 
 
 Each of these have "debit" versions and "credit" versions:
 #+begin_verse
@@ -140,4 +486,17 @@ NI      +Acts Receivable   -Payment on account
 NE      +Pre-paid expense  -Acts Payable
 #+end_verse 
 
+
+* Categories
+
+* Footnotes
+[fn:1] Valued in utils, consumption is typically greater than production.
+
+[fn:2] Note that ``finding a bag of cash'' counts as production. So a total future
+production of zero isn't quite the same as ``no longer working.'' 
+
+[fn:3] My net worth is valued in money whereas I really care about my future
+consumption in utils; so my net worth is not a perfect guide to the future.
+
+[fn:4] This is, as they say, an accounting identity.
 
