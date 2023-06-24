@@ -61,7 +61,20 @@ Anna to owe Bob.
 
 Self-directed transaction:
 - Today: £1: Anna; Someday: -£1: Anna.
-- Tomorrow: -£1: Bob ; Someday: £1: Bob
+- Tomorrow: -£1: Bob; Someday: £1: Bob
 - 
 
   
+** Versions
+
+The main thing I wanted to achieve was to replace the idea of assets
+and liabilities with the idea of "transactions that will occur in the
+future, only we don't know when".
+
+After all, transactions that will definitely occur are "scheduled
+payments", or "scheduled income". (Although ... there is this idea of
+capitalising future cashflows?) 
+
+One thing unresolved is how to move an obligation (a future favour?)
+from one entity to another. 
+
