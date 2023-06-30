@@ -78,6 +78,10 @@ unlikely in the future.
 
 
 
+1. Want to aggregate particular flows, regardless of place
+2. Some differences are not relevant -- have to esimate anyway
+3. Wealth that isn't money
+
 
 
 
