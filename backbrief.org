@@ -17,6 +17,8 @@ The motivating ideas here are:
   transactions whose exact date we don't yet know.
 - A “budget” is now a set of transactions that will occur in the future,
   and we do know when.
+- “Assets” and “liabilities” are a reporting artefact and are obtained
+  from all transactions so far.
 
 Contents:
 2. Definitions
@@ -180,7 +182,7 @@ I'm not sure about the redundancy in favours (2) and (3).
 
 Here the idea is that I record, in the system, the fact that I have
 worked in March and am owed money but, at the time of recording, I
-have not yet received the money; however I am certain that the money
+have not yet received the money; however, I am certain that the money
 will arrive before the end of April.
 
 As a first pass, ignore the fact that I have a bank account.
@@ -199,9 +201,10 @@ the transactions which cancel out. (Maybe the second one should be
 negative? I don't know. Probably it should be, since there really was
 no _Self_ to _Job_ favour in April.)
 
-We have to match the transactions. We could not have entered
-transaction (2) as we did in the previous example because the “I do
-work for _Job_” transaction would be double-counted.
+We have to match the transactions and back out the previous one. We
+could not have entered transaction (2) as we did in the previous
+example because the “I do work for _Job_” transaction would be
+double-counted.
 
 Then, with the bank account, we enter transaction 1 just as we did
 before:
@@ -213,10 +216,26 @@ But now transaction 2 becomes:
 2. £100; _Job_ to _Bank/Current Account_; 2 April
 3. £100; _Bank/Current Account_ to _Self_; 2 April
 
-where, again, we need to match the two (X) transactions.
+where, again, we need to match the two (X) transactions. 
 
+How does this work in traditional accounting? First, one maintains
+only the total unpaid repayment (as an asset) rather than the
+particular period. To manage very different repayment periods, there
+are typically a small number of different assets: “accounts
+receivable,” ”current assets”, and “fixed assets”. (Maybe also
+“accounts past due”?)
 
+How does this work when reading a bank statement? The point about the
+bank statement is that it is (a) a summary of things that have
+happened; and (b) missing part of the transaction. So for every entry
+we need to figure out the other persons and, in addition, whether we
+have already made a note of this transaction. In the latter case, we
+might need to confirm -- or add additional information! -- or we might
+need to back it out.
 
+*** A planned payment does not occur
+
+I think we have to back it out.
 
 
 ** Budgeting
@@ -228,13 +247,59 @@ where, again, we need to match the two (X) transactions.
 Do we need a description of the thing that a favour is for? Eg,
 "electricity"? What is "something, only I don't know what it is yet"?
 
+Are we using intervals for two different reasons?
+1. To note that a favour will be paid on a date in some given period
+   only as yet we don't know which date?
+2. To note that a favour was aggregated on different days over a time
+   period but we don't know (and will never know) how much was
+   transacted on each day?
+Maybe we can get around this by noting that in (1) the payment may,
+for all we know now, be repaid on several days, so long as the
+aggregate over the period is correct.  
+
+
+
 * Other characteristics
 
-- Transactions have a “known-by” date, which is the date when the
-  transaction was known about by the system. 
+** Dates
 
+1. 1 March 2023
+2. w/c 6 March 2023 (Monday)
+3. March 2023
+4. 2023
+5. 2023w4
+6. ISO March 2023 (whole weeks in March)
+
+   
+** What is known when
+
+1. “Today”
+2. The date when a transaction was entered
+3. The date (range) of the favour
+4. The date before which all favours are known.
+
+Since favours may occur “in the future.”
+
+- Transactions have a “known-by” date, which is the date when the
+  transaction was known about by the system. There is the “present
+  date” when transactions after this date are supposed to not be
+  known; and perhaps the “up to” such that transactions before this
+  date are supposed to be known.
+
+  
+
+  
 * Producing statements
 
 * Rules for entering common transactions
+
+** Manual entries
+
+** Automated entries (plans)
+
+** Bank statements
+
+
+
 
 * Budgeting and planning
