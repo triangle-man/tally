@@ -19,7 +19,7 @@ The motivating ideas here are:
   and we do know when.
 - “Assets” and “liabilities” are a reporting artefact and are obtained
   from all transactions so far.
-
+  
 Contents:
 2. Definitions
 3. Examples of common transactions
@@ -219,11 +219,14 @@ But now transaction 2 becomes:
 where, again, we need to match the two (X) transactions. 
 
 How does this work in traditional accounting? First, one maintains
-only the total unpaid repayment (as an asset) rather than the
+only the /total/ unpaid repayment (as an asset) rather than the
 particular period. To manage very different repayment periods, there
-are typically a small number of different assets: “accounts
-receivable,” ”current assets”, and “fixed assets”. (Maybe also
-“accounts past due”?)
+are typically a small number of different assets and liabilities:
+“accounts receivable” (payable within 90 days, although the deadline
+is different for each of the assets), “current assets” (immediately
+recoverable), “current liabilities” (due within a year), “fixed
+assets” (not immediately recoverable), and “non-current liabilities”
+(not due for at least a year). (Maybe also “accounts past due”?)
 
 How does this work when reading a bank statement? The point about the
 bank statement is that it is (a) a summary of things that have
@@ -257,6 +260,9 @@ Maybe we can get around this by noting that in (1) the payment may,
 for all we know now, be repaid on several days, so long as the
 aggregate over the period is correct.  
 
+What is a bank account? It's a tentative favour, of indeterminate
+type, whose lower bound is when the deposit was made, and whose upper
+bound is “any day.”
 
 
 * Other characteristics
@@ -270,6 +276,7 @@ aggregate over the period is correct.
 5. 2023w4
 6. ISO March 2023 (whole weeks in March)
 
+   
    
 ** What is known when
 
@@ -288,18 +295,167 @@ Since favours may occur “in the future.”
 
   
 
-  
-* Producing statements
+** “Reasons”
+
+Individual favours have a reason -- the thing they provide -- such as:
+- groceries
+- electricity
+- bike
+- ...
+
+Some of these have categories themselves, where the category is
+detemined by the reason, eg:
+- travel
+- consumables
+
+However, there are also categorisations useful for analysis which
+(may?) also be determined by the reason:
+
+- fixed
+- discretionary
+
+The there are categories that are /not/ determined by the category of
+the reason, for example:
+
+- holiday
+- work-related (eg, suits? commute?)
+
+
+
+
+* Producing reports
+
 
 * Rules for entering common transactions
 
-** Manual entries
+** Definitions
 
-** Automated entries (plans)
+*** Merging transactions
 
-** Bank statements
+A tentative favour may later be backed out and replaced. When this
+happens, we retain the component transactions but report them as the
+aggregate transaction.
 
+Thus, given some date, a favour may or not /occur/ before that date;
+and it may or may not have been /known/ before that date. These are
+distinct things.
+
+*** Tentative vs. Definite
+
+A transaction may be marked as /non-final/. A non-final transaction is
+one that we expect to be refined, when we know more. For example, when
+doing the equivalent of “accrual accounting” for, say, a utility, we
+don't yet know when the bill will come in, nor precisely how much it
+will be.
+
+A favour may be marked as /tentative/. A tentative favour is one that
+arises during reading, when we have only seen one side of a transaction.
+
+When non-final transactions are merged, the date of creation of the
+combined transaction is the latest date and “backed out” favours are
+(reported as if they had been) removed.
+
+*** Manual entries
+
+Manual entries might be thought of us entries that ought to be generated
+automatically when an “accountable event” occurs. (“Accountable event” here
+means the giving or receiving of a favour, or an agreement that such will
+occur.)
+
+Manual entries are likely to be made for large transactions that will not be
+reflected in a statement for some time.
+
+A manual entry might also be made 
+
+*** Automated entries (plans)
+
+** Statements
+
+A /statement/ (for example, a bank statement) is a record of favours
+for a specific person (for example, a bank account). It is a list of
+favours for which either the creditor or the debtor is that person.
+
+A statement may guarantee to be a /complete/ record of such favours
+between two dates, known at the time of production. (We can use this
+to cross-check other entries.)
+
+A statement often includes a “total to date,” recording the total
+credits and debits from an origin point in the far past up to now. (We
+don't record this number but again it is useful for cross-checks).
+
+Statements are the primary way we get outturn data into the
+system. The main task, when reading a statement, is to figure out the
+transaction that is implied by each favour. There are a few canonical
+examples:
+
+*** Expense payment (no budget)
+
+Most favours in a bank statement are part of a transaction in which I
+am paying for some other favour immediately; for example, buying
+groceries. The favour in the statement is between, say, the bank
+account and the supermarket. There are two missing favours: one
+between me and the supermarket (for the food!) and one between me and
+the bank account (it now owes me less in future).
+
+For these kind of transactions, there may or may not be a true-up
+involved. If we have not created a budget, then there isn't. If we
+have, then we might need to match this transaction with the budget.
+
+What is the difference between this transaction (with the bank) and
+one in which we matched a past transaction? Not entirely sure. But in
+the previous case, had we entered the new transaction as it appeared
+to have occured, we'd be double-counting. Here we would not be
+double-counting because we have not, in the past, entered the
+transaction between me and the supermarket.
+
+1. In the past:
+   - (a) _Self_ -> _Job_, £100, Jan 2023
+   - (b) _Job_ -> _Bank_, £100, 1 Feb 2023
+   - (c) _Bank_ -> _Self_, £100, [1 Feb 2023, Any day].
+
+2. Now
+   - (a) _Bank_ -> _Supermarket_, £100, 1 March 2023 <-- is this open?
+     [1 March, Any day] ??
+   - (b) _Supermarket_ -> _Self_, £100, 1 March 2023
+   - (c) _Self_ -> _Bank_, £100, 1 March 2023
+
+No double-counting! Huh! In this transaction, only favour (a) is part
+of the bank statement. (b) is what I got and (c) is something about my
+bank.
+
+(Need some efficient way to decide whether there is every a time when
+Debits > Credits for _Bank_.)
+
+Also, what does the sum at infinity mean? Some kind of boundary
+condition?
+
+*** Transfer
+
+Some bank favours are a transaction to another favour-holding service
+(such as a different bank account, or _Cash_.)
+
+Some of these might need to be matched with another transaction, on
+the other bank account, to find out what they are actually for.
+
+*** Expense/income, budgeted
+
+See budgeting and planning
+
+** Income-generating, fixed assets
 
 
 
 * Budgeting and planning
+
+A budget is a set of transactions that are non-final. 
+
+
+
+
+
+* Chart of Accounts
+
+What we've got in this system is a hierarchy of /favours/, not of
+/persons/. (And there’s some rule about which favours can be netted
+against which others. “Can only repay beer-debt with beer!”)
+

@@ -1,0 +1,125 @@
+#+title: Chart of Accounts
+
+
+* Reasons
+
+(household-consumables .
+  (groceries
+   clothes
+   health-and-cosmetics
+
+(domestic-supply .
+  (water
+   electricity
+   gas
+   internet
+   streaming
+   cloud
+  )
+  
+(news-and-entertainment
+   news
+   streaming 
+   eating-out
+   
+transport .
+  train
+  bike
+  car
+  air
+   
+mortgage
+tax
+
+labour
+
+
+Controllable
+  fixed
+  discretionary
+
+
+
+
+
+
+
+
+
+
+
+* Persons
+
+
+** Natural Person
+
+Jamie
+Irene
+Tomaz
+GeddesDeAlmeida
+
+** Retailer
+
+Sainsburys
+Aldi
+Lid
+Tesco
+Waitrose
+TK Maxx
+Primark
+Boots
+Healthchem Pharma
+
+** Utility
+
+Bulb
+Octopus
+Sky
+Netflix
+TV Licensing
+Thames Water
+Apple
+The Guardian
+The Labour Party
+
+
+** Employer
+
+Turing
+
+** Service Provider
+
+Scottish Provident
+Nocell Ltd
+RingGo Parking
+TfL
+Southern Railway
+Zipcar
+Streatham Hill Vets
+Kathy the Therapist
+
+** Contractual Relationship
+
+Leaseholder (Rosemary Barnes)
+
+** Restaurant
+
+McDonalds
+Seventeen
+Seascape
+Gails
+
+** Financial Institution
+
+first-direct-jamie-personal
+first-direct-joint
+first-direct-jamie-credit-card
+
+irene-personal
+
+santander-mortgage
+
+** Real Option
+
+Car
+161A Bedford Hill

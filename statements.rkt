@@ -1,7 +1,14 @@
 #lang racket/base
 
-;; Facilities for reading bank statements from CSVs
-;; Currently assumes statements are in the format provided by first direct
+#|
+
+Read and parse raw statements 
+
+A statement is a file containing favours from the perspective of a particular person. A raw statement
+is one where the other side(s) of the transactions or the reason may be uncertain. This is the case
+with most bank statements, for example.
+
+|#
 
 (require racket/contract
          racket/path
@@ -10,67 +17,63 @@
          racket/match
          gregor)
 
-(provide
- (contract-out
-  (struct line
-    [(date        date?)
-     (description string?)
-     (reference   string?)
-     (amount      number?)
-     (balance     number?)])
-  (path->account-number (-> path? string?))
-  (parse-line (-> string? line?)))) 
+(provide read-raw-first-direct-statement) 
 
 
-;; ----------------------------------------------------------------------
 
-(struct line (date description reference amount balance) #:transparent)
+
+
+;; Person-specific readers
+;; ===================================================================================================
+
+
+#|
+
+------------------------------------------------------------------------------------------------------
+Bank: first direct
+
+Format: Downloaded csv statements
+As of:  29 July 2023
+
+The first line of this file is the string:
+"Date,Description,Amount,Balance"
+
+Each subsequent line is of the form:
+
+DD/MM/YYYY,SS..SSTT..TT,99.99,99.99
+
+If the field SS..SSTT..TT is not more than 18 characters, then it should be read as a single
+description. If it is longer than 18 characters, then the first 18 characters are a description
+(which may be truncated or may be right-padded with spaces) and the remaining characters are a
+reference.
+
+The first numeric field is the transaction amount (positive for a deposit; negative for a payment or
+withdrawal). The final field is the balance following this transaction.
+
+|#
+
+
+;; read-raw-first-direct-statement : path? -> [List-of line?]
+;; A line? is a list whose first element is the date, the second is the amount, and then either one
+;; or two strings.
+(define (read-raw-first-direct-statement path)
   
-;; read-csv-statement : path? -> string? [List-of line?]
-(define (read-csv-statement path)
-  ;; Read last four digits of the account number from the filename
-  (define account (path->account-number path))
-  account
-  )
+  (define (parse-line ln)
+    (match-let ([(list dt desc amt _) (string-split ln "," #:trim? #f)])
+      (list (parse-date dt "dd/MM/yyyy")                                       ; date
+            (* 100 (string->number amt 10 'number-or-false 'decimal-as-exact)) ; amount in pence
+            (string-trim (substring desc 0 (min 18 (string-length desc))))     ; description
+            (if (> (string-length desc) 18)                                    ; reference (if given)
+                (substring desc 18)
+                ""))))
 
-(define (parse-line ln)
-  (match-let ([(list dt desc amt bal) (string-split ln "," #:trim? #f)])
-    (line (parse-date dt "dd/MM/yyyy")
-          (string-trim (substring desc 0 (min 18 (string-length desc))))
-          (if (> (string-length desc) 18)
-              (substring desc 18)
-              "")
-          (string->number amt)
-          (string->number bal))))
+  (let ([lines (with-input-from-file path port->lines)])
+    (if (not (string=? (car lines) "Date,Description,Amount,Balance"))
+        (raise-user-error "Did not recognise the header as a first direct statement" path)
+        (map parse-line (cdr lines)))))
 
 
+  
 
-;; In first direct CSVs, the filename is of the form DDMMYYYY_nnnn.csv where
-;; DDMMYYYY is the download data and nnnn is the last four digits of the account
-;; number.
-;; path->account-number : path? -> string?
-(define (path->account-number path)
-  (define filename
-    (path->string
-     (or (file-name-from-path path)
-         (raise-argument-error
-          'path->account-number
-          "a filename, not a directory"
-          path))))
-  (define maybe-account-number
-    (or (regexp-match #px"^\\d{8}_(\\d{4})\\.csv$" filename)
-        (raise-argument-error
-         'path->-account-number
-         "a first direct format filename, of the form DDMMYYYY_nnnn.csv"
-         filename)))
-  (cadr maybe-account-number))
 
-;; ----------------------------------------------------------------------
-
-(module+ main
-  (with-input-from-file "data/25092022_6976.csv"
-    (λ ()
-      (read-line)
-      (sort (map parse-line (port->lines))
-            (λ (l1 l2)
-              (string<? (line-description l1) (line-description l2)))))))
+  
