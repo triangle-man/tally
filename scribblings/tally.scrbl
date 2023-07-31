@@ -1,10 +1,10 @@
 #lang scribble/manual
-@require[@for-label[budget
+@require[@for-label[tally
                     racket/base]]
 
-@title{budget}
-@author{jgeddes}
+@title{tally}
+@author{James Geddes}
 
-@defmodule[budget]
+@defmodule[tally]
 
 Package Description Here

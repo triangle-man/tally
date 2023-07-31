@@ -54,8 +54,9 @@ withdrawal). The final field is the balance following this transaction.
 
 
 ;; read-raw-first-direct-statement : path? -> [List-of line?]
-;; A line? is a list whose first element is the date, the second is the amount, and then either one
-;; or two strings.
+;;
+;; A line? is a list whose first element is the date, the second is the amount in pence, and then
+;; either one or two strings.
 (define (read-raw-first-direct-statement path)
   
   (define (parse-line ln)
@@ -73,7 +74,16 @@ withdrawal). The final field is the balance following this transaction.
         (map parse-line (cdr lines)))))
 
 
-  
+;; read-tentative-first-direct-statement : [List-of line?] - > [List-of [List-of tentative-favour?]]
+;; Attempt to determine the reason and the (other) person for each line in the statement.
+;; For each line, return a list of possible interpretations.
 
+;; 1. Check exact exceptions as given in the exceptions list
+;; 2. Check pattern matches as given in the pattern-match list
+;;    - Emit warnings if pattern over-ridden by exception
+;; 3. Emit unmatched lines
 
-  
+(define (read-tentative-first-direct-statement lines)
+
+  )
+

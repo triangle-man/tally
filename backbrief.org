@@ -349,7 +349,8 @@ don't yet know when the bill will come in, nor precisely how much it
 will be.
 
 A favour may be marked as /tentative/. A tentative favour is one that
-arises during reading, when we have only seen one side of a transaction.
+arises during reading, when we have only seen one side of a
+transaction and we have to guess what the other side is.
 
 When non-final transactions are merged, the date of creation of the
 combined transaction is the latest date and “backed out” favours are

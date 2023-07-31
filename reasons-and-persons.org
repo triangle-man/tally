@@ -7,6 +7,7 @@
   (groceries
    clothes
    health-and-cosmetics
+  )
 
 (domestic-supply .
   (water
@@ -16,29 +17,29 @@
    streaming
    cloud
   )
+
+(insurance .
+  life
+  buildings
+  household-contents
+  travel
+)
   
-(news-and-entertainment
+(news-and-entertainment .
    news
-   streaming 
    eating-out
    
-transport .
+(transport .
   train
   bike
   car
   air
-   
+  )
+  
 mortgage
 tax
 
 labour
-
-
-Controllable
-  fixed
-  discretionary
-
-
 
 
 
@@ -58,17 +59,27 @@ Irene
 Tomaz
 GeddesDeAlmeida
 
-** Retailer
+** Financial Institution
 
-Sainsburys
-Aldi
-Lid
-Tesco
-Waitrose
-TK Maxx
-Primark
-Boots
-Healthchem Pharma
+first-direct-jamie
+first-direct-geddesdealmeida
+first-direct-jamie-credit-card
+
+irene-personal
+
+santander-mortgage
+
+** Real Option
+
+Car
+161A Bedford Hill
+** Employer
+
+Turing
+
+** Contractual Relationship
+
+Leaseholder (Rosemary Barnes)
 
 ** Utility
 
@@ -82,10 +93,17 @@ Apple
 The Guardian
 The Labour Party
 
+** Retailer
 
-** Employer
-
-Turing
+Sainsburys
+Aldi
+Lidl
+Tesco
+Waitrose
+TK Maxx
+Primark
+Boots
+Healthchem Pharma
 
 ** Service Provider
 
@@ -97,29 +115,8 @@ Southern Railway
 Zipcar
 Streatham Hill Vets
 Kathy the Therapist
-
-** Contractual Relationship
-
-Leaseholder (Rosemary Barnes)
-
-** Restaurant
-
 McDonalds
 Seventeen
 Seascape
 Gails
 
-** Financial Institution
-
-first-direct-jamie-personal
-first-direct-joint
-first-direct-jamie-credit-card
-
-irene-personal
-
-santander-mortgage
-
-** Real Option
-
-Car
-161A Bedford Hill
