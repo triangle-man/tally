@@ -1,0 +1,49 @@
+
+SAGREDO
+I'm trying to keep track of my accounts. I've bought a notebook to record all my
+transactions.
+
+For example, here we are in the checkout of this popular supermarket chain. I
+have bought an apple for 30p, which I'm paying for using Apple Pay.
+
+So in my book I write down:
+
+| Date     | Expense              | Amount |
+|----------+----------------------+--------|
+| Thursday | Apples (Sainsbury's) |   0.30 |
+
+
+SALVIATI
+That's a good start! But you should write down that this came from your bank
+account. my experience is that when it comes time to summarise your expenses, it
+is very useful to have a cross-check. In this case, your bank balance at the end
+of the month should differ from the balance at the end of the previous month by
+the different of deposits and withdrawals. And the same should be true of your
+cash on hand.
+
+
+SAGREDO
+Ah, very sensible. So I shall write thus:
+
+| Date     | Expense            | From         | Amount |
+|----------+--------------------+--------------+--------|
+| Thursday | Food (Sainsbury's) | Bank account |   0.30 |
+
+But now, come to think of it, I am taking money /from/ my bank and giving it
+/to/ Sainsbury's; so for consistency I should presumably write:
+
+| Date     | From         | To          | Reason      | Amount |
+|----------+--------------+-------------+-------------+--------|
+| Thursday | Bank account | Sainsbury's | Bought food |   0.30 |
+
+This must be that “double entry” thing you talk about? I debit one person and
+credit another.
+
+
+SALVIATI
+Ah, well, hm; no, it is not quite that.
+
+You are right that you will need two places; or two “accounts,” as we say. But
+the second one is an expense account called “Food,” rather than “Sainsbury's.”
+
+
