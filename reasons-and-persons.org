@@ -73,11 +73,12 @@ santander-mortgage
 
 Car
 161A Bedford Hill
+
 ** Employer
 
 Turing
 
-** Contractual Relationship
+** Role
 
 Leaseholder (Rosemary Barnes)
 
@@ -104,6 +105,10 @@ TK Maxx
 Primark
 Boots
 Healthchem Pharma
+McDonalds
+Seventeen
+Seascape
+Gails
 
 ** Service Provider
 
@@ -115,8 +120,4 @@ Southern Railway
 Zipcar
 Streatham Hill Vets
 Kathy the Therapist
-McDonalds
-Seventeen
-Seascape
-Gails
 

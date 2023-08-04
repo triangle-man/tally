@@ -1,3 +1,4 @@
+;; -*- fill-column: 102; -*-
 #lang racket/base
 
 #|
@@ -69,9 +70,30 @@ withdrawal). The final field is the balance following this transaction.
                 ""))))
 
   (let ([lines (with-input-from-file path port->lines)])
-    (if (not (string=? (car lines) "Date,Description,Amount,Balance"))
-        (raise-user-error "Did not recognise the header as a first direct statement" path)
-        (map parse-line (cdr lines)))))
+    (unless (string=? (car lines) "Date,Description,Amount,Balance")
+        (raise-user-error "Did not recognise the header as a first direct statement" path))
+    (map parse-line (cdr lines))))
+
+(define (favour . xs)
+  #f)
+
+(define (simple-expense-reader creditor debtor reason)
+  (λ (dt amt text1 text2)
+    (list
+     (list
+      (favour dt amt creditor debtor reason)
+      (favour dt amt 'first-direct-geddesdealmeida creditor 'favour)
+      (favour dt amt debtor 'first-direct-geddesdealmeida 'favour)))))
+
+
+;; Patterns and readers for different kinds of line
+(define readers
+  (list
+   ;; Sainsbury's supermarket. The reference is the branch, which we ignore
+   `((#rx"SAINSBURYS" #f) . ,(simple-expense-reader 'Sainsburys 'GeddesDeAlmeida 'groceries)) )
+  )
+
+
 
 
 ;; read-tentative-first-direct-statement : [List-of line?] - > [List-of [List-of tentative-favour?]]
@@ -84,6 +106,6 @@ withdrawal). The final field is the balance following this transaction.
 ;; 3. Emit unmatched lines
 
 (define (read-tentative-first-direct-statement lines)
-
+  #f
   )
 

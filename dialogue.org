@@ -1,10 +1,16 @@
 
 SAGREDO
-I'm trying to keep track of my accounts. I've bought a notebook to record all my
-transactions.
 
-For example, here we are in the checkout of this popular supermarket chain. I
-have bought an apple for 30p, which I'm paying for using Apple Pay.
+Hello, Salviati! My good friend Simplicio has asked me to help him
+keep track of his money as he doesn't know where it all goes. I
+thought I would start by keeping my own records and, since you are the
+expert, I was hoping to solicit your advice.
+
+I've bought a notebook to record all my transactions.
+
+For example, here we are in the checkout of this popular supermarket
+chain. I have bought an apple for 30p, which I'm paying for using
+Apple Pay.
 
 So in my book I write down:
 
@@ -14,36 +20,181 @@ So in my book I write down:
 
 
 SALVIATI
-That's a good start! But you should write down that this came from your bank
-account. my experience is that when it comes time to summarise your expenses, it
-is very useful to have a cross-check. In this case, your bank balance at the end
-of the month should differ from the balance at the end of the previous month by
-the different of deposits and withdrawals. And the same should be true of your
-cash on hand.
+
+That's a good start! But you should write down that the money came out
+of your bank account.
+
+My experience is that when it comes time to summarise your expenses,
+it is very useful to have a cross-check. In this case, your bank
+balance at the end of the month should differ from the balance at the
+end of the previous month by the different of deposits and
+withdrawals. And the same should be true of your cash on hand.
 
 
 SAGREDO
-Ah, very sensible. So I shall write thus:
+
+Ah, indeed, very sensible. I can see that I was right to ask for your
+counsel! So I shall write thus:
 
 | Date     | Expense            | From         | Amount |
 |----------+--------------------+--------------+--------|
 | Thursday | Food (Sainsbury's) | Bank account |   0.30 |
 
-But now, come to think of it, I am taking money /from/ my bank and giving it
-/to/ Sainsbury's; so for consistency I should presumably write:
+But now, come to think of it, I am taking money /from/ my bank and
+giving it /to/ Sainsbury's. So, for consistency I should presumably
+write:
 
 | Date     | From         | To          | Reason      | Amount |
 |----------+--------------+-------------+-------------+--------|
 | Thursday | Bank account | Sainsbury's | Bought food |   0.30 |
 
-This must be that “double entry” thing you talk about? I debit one person and
-credit another.
+This must be that “double entry” thing you talk about? I “debit” one
+person and “credit” another. How neatly it works out!
 
 
 SALVIATI
+
 Ah, well, hm; no, it is not quite that.
 
-You are right that you will need two places; or two “accounts,” as we say. But
-the second one is an expense account called “Food,” rather than “Sainsbury's.”
+You are right that you will need two places; or two “accounts,” as we
+say. The first one, your bank account, is a personal account. But the
+second one is not a person, or a company like “Sainsbury’s,” it is an
+/expense account/ called “Food.” We call these /nominal accounts/.
+
+Let me write this as we do in the “journal”:
+
+| Date     | Memo          | Account             | Debit | Credit |
+|----------+---------------+---------------------+-------+--------|
+| Thursday | /Sainsbury's/ |                     |       |        |
+|----------+---------------+---------------------+-------+--------|
+|          |               | Assets:Bank account |       |   0.30 |
+|          |               | Expenses:Food       |  0.30 |        |
+|----------+---------------+---------------------+-------+--------|
+|          |               |                     |  0.30 |   0.30 |
+
+This is a /transaction/. We record both the debits and the credits and
+the total of each must be equal to the other. (/That/ is why it's
+called “double entry.”)
+
+
+SAGREDO
+
+I see. Well, I /sort/ of see, Salviati, and I sort of don't at the
+same time.
+
+There are now two lines in this single transaction ... well, perhaps
+there might be more than two lines --- if, somehow, a third party were
+engaged in our transaction --- and in that case, it would no longer be
+the case that I would write the very same number twice. So I
+understand why you would write one under the other.
+
+
+SALVIATA
+
+Exactly, Sagredo! Sometimes the transaction involves more than two
+accounts, especially if tax is involved.
+
+
+SAGREDO
+
+And so then every account is either a personal account or a nominal
+account?
+
+
+SALVIATA
+
+No, there are also /real accounts/, which are either solid, tangible
+things, such as houses or cars; or intangible things such as patents.
+
+
+SAGREDO
+
+I am not sure I see the common theme there. And I am still confused as
+to why “Sainsbury’s” is now a memo item but my bank is not. Of course,
+Sainsbury's don't send me a statement every month! Though ... perhaps
+one day, when everything is computerised, I /will/ receive a similar
+summary of my transactions with them. Certainly I will not receive a
+statement from the apples!
+
+
+SAVLIATA
+
+Very droll, Sagredo! Still, this is the way it is done.
+
+
+SAGREDO
+
+Well, let's try some variations. What if I were to /steal/ the apple?
+I presume, since I spent no money, the situation would look like this:
+
+| Date     | Memo          | Account       | Debit | Credit |
+|----------+---------------+---------------+-------+--------|
+| Thursday | /Sainsbury's/ |               |       |        |
+|----------+---------------+---------------+-------+--------|
+|          |               | Expenses:Food |  0.30 |        |
+|----------+---------------+---------------+-------+--------|
+|          |               |               |  0.30 |        |
+
+Hm. Now the transaction no longer balances? Also, it's not really an
+expense. How should I record this?
+
+
+SALVIATA
+
+I presume you are not serious about the theft! Indeed, as you so
+perspicaciously observe, this transaction does not balance and so it
+is illegal in more ways than one.
+
+I confess I struggle to account for this transaction ... well, it is
+clear that you have /profited/ from the sudden arrival of an apple
+with no attendant expense. So we should write:
+
+| Date     | Memo          | Account                 | Debit | Credit |
+|----------+---------------+-------------------------+-------+--------|
+| Thursday | /Sainsbury's/ |                         |       |        |
+|----------+---------------+-------------------------+-------+--------|
+|          |               | Income:Immoral earnings |       |   0.30 |
+|          |               | Assets:Apples           |  0.30 |        |
+|----------+---------------+-------------------------+-------+--------|
+|          |               |                         |  0.30 |   0.30 |
+
+You see! The system works! You have acquired an asset: to wit, an
+apple. So we must debit the corresponding asset account. And you have
+also profited thereby (albeit immorally) so we credit the
+corresponding income account.
+
+
+SAGREDO
+
+Now you have lost me. I believe I performed one /fewer/ actions than
+previously, yet now there are /two/ entirely new accounts! Are you
+saying I must perforce track the number of apples I have?
+
+
+SALVIATA
+
+Ah, well, no. I mean, yes, actually you should track the apples; but
+since you eat them straight away---I see you have eaten this one
+already---there's not really much point in doing so. Nonetheless, you
+make a good point and I see I was a little hasty. Indeed, starting
+from the above we might say that eating the apple credits the asset
+account and debits the expense account, so that net effect is:
+
+| Date     | Memo          | Account                 | Debit | Credit |
+|----------+---------------+-------------------------+-------+--------|
+| Thursday | /Sainsbury's/ |                         |       |        |
+|----------+---------------+-------------------------+-------+--------|
+|          |               | Income:Immoral earnings |       |   0.30 |
+|          |               | Expenses:Food           |  0.30 |        |
+|----------+---------------+-------------------------+-------+--------|
+|          |               |                         |  0.30 |   0.30 |
+
+There: balance is restored.
+
+
+SAGREDO
+
+
+
 
 
