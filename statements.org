@@ -1,0 +1,4 @@
+# -*- fill-column: 72; -*-
+#+title: Reading statements
+
+A /statement/ is a set of favours.

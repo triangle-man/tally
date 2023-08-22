@@ -86,13 +86,50 @@ Contents:
 
 5. An /ledger/ is a set of transactions.
 
+* PROBLEMS
+
+It seems unnecessarily complicated making each person net to zero in
+_every_ transaction.
+
+1. Drop the condition that, at each transaction, each person must net
+   to zero. Thus, a transaction is simply a set of favours; albeit one
+   where the total debits minus credits is zero (since that is
+   true of each favour in isolation). 
+2. Add, as an extra condition, the rule that the net debits minus
+   credits is zero for each person separately over all time.
+
+Well, but now (2) might not be true until we've got to the end of
+time, which is the thing we were trying to avoid.
+
+Here is an example of the problem. On day 1, you give me an apple:
+that's one favour, with me as the debtor and you as the creditor. On
+day 2, I give you an apple. These are two favours and, sub specie, the
+world is in balance. But at day 1 we did not know how or when the
+second favour would occur. It might have happened on day 3, for
+example. So it seems a stretch to say that these two favours are part
+of the same transaction.
+
+We could, on day 1, create two, equal and opposite, favours: one on
+day 1 and another at infinity. The same would be true on day 2. Then
+the two favours at infinity would cancel out, which is more what
+actually happens.
+
+In traditional accounting, we don't include the favours at infinity
+since they can be inferred (they are the inverse of the totals to
+date). In addition, there is no _Self_ person. Instead, the first
+favour is between _Accounts payable_ and _Expense_; and the second
+between _Accounts payable_ and, I don't know, _Income_? _Apples_?.
+
+Are there circumstances where the traditional way is inadequate? There
+are two motivating examples:
+
+- The one above, which sure seems confusing. What happened to me and
+  thee? 
+-  
+
+
 
 * Example transactions
-
-The following are common transactions. Recall that, in a transaction,
-the total credit value must equal the total debit value for each
-person separately. Thus, apart from the degenerate case of a
-zero-value favour, a transaction will involve at least two favours.
 
 ** Exchanges
 
