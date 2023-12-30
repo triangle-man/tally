@@ -13,12 +13,14 @@ The motivating ideas here are:
   relation to expenses and income. The concept of “asset” is tricky:
   on one view, it is a cost that we expect will be matched with a
   revenue; on other view it is some kind of property right. Here,
-  there are just obligations between people and those are just future
-  transactions whose exact date we don't yet know.
+  there are just future transactions whose exact date we don't yet
+  know.
 - A “budget” is now a set of transactions that will occur in the future,
   and we do know when.
+- We want “composable” accounts. 
 - “Assets” and “liabilities” are a reporting artefact and are obtained
   from all transactions so far.
+  
   
 Contents:
 2. Definitions
@@ -82,9 +84,10 @@ Contents:
    \end{equation*}
    That is, in any transaction each person enters equally as a
    creditor and a debtor. (Note that this constraint applies
-   separately to each person but does not mention time.)
+   separately to each person but not necessarily at each time.)
 
-5. An /ledger/ is a set of transactions.
+5. A /ledger/ is a set of transactions.
+
 
 * PROBLEMS
 
@@ -341,7 +344,7 @@ Individual favours have a reason -- the thing they provide -- such as:
 - ...
 
 Some of these have categories themselves, where the category is
-detemined by the reason, eg:
+determined by the reason, eg:
 - travel
 - consumables
 
@@ -461,7 +464,7 @@ No double-counting! Huh! In this transaction, only favour (a) is part
 of the bank statement. (b) is what I got and (c) is something about my
 bank.
 
-(Need some efficient way to decide whether there is every a time when
+(Need some efficient way to decide whether there is ever a time when
 Debits > Credits for _Bank_.)
 
 Also, what does the sum at infinity mean? Some kind of boundary
@@ -497,3 +500,44 @@ What we've got in this system is a hierarchy of /favours/, not of
 /persons/. (And there’s some rule about which favours can be netted
 against which others. “Can only repay beer-debt with beer!”)
 
+
+* Random
+
+- Suppose I buy groceries. There are two favours: I get a favour from
+  the supermarket, and the supermarket gets a favour from my bank
+  account. Where is/are the matching favour(s)?
+
+  There is a missing favour: from me to my bank account. But there
+  isn't a specific time when this has or will happened. Maybe I
+  deposited money before today; or maybe I have an overdraft facility
+  and I will depost money tomorrow. All we really know is that, in the
+  long run, the bank account zeros out.
+
+- What if I am owed money by Albert and Bob jointly? The future
+  transaction is a known amount, divided in an unknown way between
+  Albert and Bob.  
+
+
+Agklq Idhum qom ndem.
+FIRST SOLVE THE CODE
+
+Gembagax c 4-hmqqmk vdke.
+IDENTIFY A 4-LETTER WORD
+
+Hddp mumkxvomkm.
+LOOK EVERYWHERE
+
+Ycxim gq't umkx diugdsl.
+MAYBE IT'S VERY OBVIOUS
+
+abcde fghij klmno pqrst uvwxy z
+FNAOD  ILS  RSECH KT S  VW YM
+T        B           U
+
+ABCDE FGHIJ KLMNO PQRST UVWXY Z
+cinem a og  phybd   k** suv x
+       t  r       fj lq suvwx z
+                     ia
+                     sq
+
+		     

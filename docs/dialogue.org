@@ -101,7 +101,7 @@ And so then every account is either a personal account or a nominal
 account?
 
 
-SALVIATA
+SALVIATI
 
 No, there are also /real accounts/, which are either solid, tangible
 things, such as houses or cars; or intangible things such as patents.
@@ -117,7 +117,7 @@ summary of my transactions with them. Certainly I will not receive a
 statement from the apples!
 
 
-SAVLIATA
+SAVLIATI
 
 Very droll, Sagredo! Still, this is the way it is done.
 
@@ -139,7 +139,7 @@ Hm. Now the transaction no longer balances? Also, it's not really an
 expense. How should I record this?
 
 
-SALVIATA
+SALVIATI
 
 I presume you are not serious about the theft! Indeed, as you so
 perspicaciously observe, this transaction does not balance and so it
@@ -171,7 +171,7 @@ previously, yet now there are /two/ entirely new accounts! Are you
 saying I must perforce track the number of apples I have?
 
 
-SALVIATA
+SALVIATI
 
 Ah, well, no. I mean, yes, actually you should track the apples; but
 since you eat them straight away---I see you have eaten this one
@@ -194,7 +194,82 @@ There: balance is restored.
 
 SAGREDO
 
+Well, that is certainly clearer, in the sense that now both when I
+steal the apple and when I buy it legitimately there is the same
+expense entry. But still: why is the /other/ entry different? Surely,
+there are two actions here: one action is that I picked up (and ate)
+an apple. The other action -- which only happened on one of these
+occasions, mind you -- was that I paid for the apple. Surely the only
+difference should be the reflection of that specific action, and all other
+entries, such as the income, should be common to both?
 
 
+SALVIATI
 
+But you did not earn income when you paid for the apple.
+
+
+SAGREDO
+
+Well, why not?
+
+
+SALVIATI
+
+Because ... you didn't do any work?
+
+
+SAGREDA
+
+I picked up the apple! Well, okay, it wasn't a lot of work, I
+admit. But surely it was the same amount of work as when I paid for
+it.
+
+
+SALVIATI
+
+Huh. Um. Because ... you'd ... already earned the income?
+
+
+SAGREDO
+
+What do you mean?
+
+
+SALVIATI
+
+Bear with me here. There's this matching principle... The first
+situation should really have been something like this:
+
+| Date      | Memo          | Account             |   Dr |   Cr |
+|-----------+---------------+---------------------+------+------|
+| Wednesday | /Job/         | Income:Salary       |      | 0.30 |
+|           |               | Assets:Bank account | 0.30 |      |
+|-----------+---------------+---------------------+------+------|
+| Thursday  | /Sainsbury's/ | Assets:Bank account |      | 0.30 |
+|           |               | Expenses:Food       | 0.30 |      |
+|-----------+---------------+---------------------+------+------|
+|           |               |                     | 0.30 | 0.30 |
+
+You see, there really was income in the first situation. It's just
+that it was separated in time from the expense it was used for. You
+could imagine collapsing these two days, and the two sides of the bank
+account transaction would annihilate each other, leaving basically the
+same transaction as when you stole the apple.
+
+The bank account is just ... a sort of transfer account which links the
+income on Wednesday to the expense on Thursday.
+
+
+SAGREDO
+
+I see! Although, can you really connect that particle 30p from my
+income to this specific expenditure on apples?
+
+
+SALVIATI
+
+No... though companies sort of try to connect their expenses to the
+income it generated ... at least, they try to account for them in the
+same period. Er. 
 

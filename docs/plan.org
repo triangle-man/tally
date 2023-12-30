@@ -1,0 +1,24 @@
+** Plan
+
+1. Read three months of first direct joint account data, assigning a
+   person to each transaction.
+
+** How to do it
+
+*** Rules
+
+Maintain a file, ~rules.rkt~, in the statement directory, which gives a
+person for each exact match.
+
+*** Persons
+
+Maintain a file, ~persons.rkt~ in config, that lists:
+
+- all individual persons (as strings) together with
+  - a short name (one that works in the context of their category)
+  - their primary category (as a symbol)
+
+- the hierarchy of categories of persons (as symbols)
+   
+
+
