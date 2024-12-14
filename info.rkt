@@ -1,6 +1,7 @@
 #lang info
 (define collection "tally")
-(define deps '("base"))
+(define deps '("base"
+               "gregor-lib"))
 (define build-deps '("scribble-lib" "racket-doc" "rackunit-lib"))
 (define scribblings '(("scribblings/tally.scrbl" ())))
 (define pkg-desc "Sort out my finances")

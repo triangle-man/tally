@@ -53,7 +53,7 @@ Contents:
 3. A /favour/ is
    1. an ordered pair, $(i, j)$, of people, $i,j\in \mathcal{P}$; 
    2. a non-negative number, $v$; and
-   3. a period, $T$.
+   3. a period, $T$.99999999999999
 
    A favour represents the provision of a good or service, of value
    $v$, to $j$ by $i$, sometime in period $T$. Person $i$ is called
@@ -503,41 +503,105 @@ against which others. “Can only repay beer-debt with beer!”)
 
 * Random
 
-- Suppose I buy groceries. There are two favours: I get a favour from
-  the supermarket, and the supermarket gets a favour from my bank
-  account. Where is/are the matching favour(s)?
+- Suppose I buy groceries. There are two favours: I get a
+  favour from the supermarket, and the supermarket gets a
+  favour from my bank account. Where is/are the matching
+  favour(s)?
 
-  There is a missing favour: from me to my bank account. But there
-  isn't a specific time when this has or will happened. Maybe I
-  deposited money before today; or maybe I have an overdraft facility
-  and I will depost money tomorrow. All we really know is that, in the
-  long run, the bank account zeros out.
+  There is a missing favour: from me to my bank account. But
+  there isn't a specific time when this has or will
+  happened. Maybe I deposited money before today; or maybe I
+  have an overdraft facility and I will depost money
+  tomorrow. All we really know is that, in the long run, the
+  bank account zeros out.
 
-- What if I am owed money by Albert and Bob jointly? The future
-  transaction is a known amount, divided in an unknown way between
-  Albert and Bob.  
+- What if I am owed money by Albert and Bob jointly? The
+  future transaction is a known amount, divided in an
+  unknown way between Albert and Bob.
+
+The traditional system treats everything as a stock: not
+just things like capital equipment and cash, but also things
+like consumables and debt. In contrast, this system deals
+mainly with consumption and debt. So what is our story about
+stock?
+
+We can deal with debt. Debt is an option.
+
+Day 1
+A -> B, 1u, on day 1.
+B -> A, 1u, somewhere between day 1 and day infinity,
+presumably at A's discretion (we've called this 'any,
+because, from B's perspective, it could happen "any" day)
+
+Day 3
+B -> A, 1u -- how to note that this is repayment?
+
+We have two options (aha ha):
+
+(a) A -> B, 1u, between day 3 and "any day" ("any" day
+indicating that it is at B's discretion)
+
+(b) B -> A, -1u, between day 3 and "any day".
+
+On option (a), what happens on day 4?
+
+- from A's perspective, we have
+
+i. Day 1: Gave to B
+ii. Day 3: Received from B
+
+That does make us square. However, these aren't necessarily
+part of the same transaction. So it can't be that, _sub
+specie_, these are the only two favours. (Or, well, I
+suppose it could, if all favours were part of the same
+transaction?)
+
+Anyway, total remaining in the future:
+
+From B (to A), any time A likes
+To B (from A), any time B likes
+
+Maybe this works? If A calls in the favour, then B can
+immediately call it back, so the net balance for B, at any
+time, is zero.
+
+It also doesn't require us to say whether we are "acquiring
+a new credit" or "paying back an existing debt". Is that a
+good thing? Or maybe that's the distinction between "some
+day" and "any day"? 
+
+Okay, this is all well and good. But now let's introduce an
+intermediary, like a bank.
+
+The broad idea is that at any time the bank "owes" me a
+favour, at my discretion. So presumably, there is already a
+favour of the form:
+
+Bank -> Me, between t0 and "any day"
+
+It's now t > t0. I buy something from a retailer
+
+Retailer -> Me, t
+
+Now, as part of the same transaction, we "transfer" the
+favour that the bank owes me to the retailer. So we want to
+end up with,
+
+(Final:) Bank -> Retailer, between t1 and "any day".
+
+We could just add that? And also add:
+
+Me -> Bank, between t1 and "any day".
+
+That's how I pay back the bank ... with an "any day".
+
+Lastly, what is the correct reason to use in all of this?
+Going back to the first example, it's clear that the favour
+could be anything. So ... is the reason "any" (or null, or
+"favour")? Maybe null...
 
 
-Agklq Idhum qom ndem.
-FIRST SOLVE THE CODE
 
-Gembagax c 4-hmqqmk vdke.
-IDENTIFY A 4-LETTER WORD
 
-Hddp mumkxvomkm.
-LOOK EVERYWHERE
 
-Ycxim gq't umkx diugdsl.
-MAYBE IT'S VERY OBVIOUS
 
-abcde fghij klmno pqrst uvwxy z
-FNAOD  ILS  RSECH KT S  VW YM
-T        B           U
-
-ABCDE FGHIJ KLMNO PQRST UVWXY Z
-cinem a og  phybd   k** suv x
-       t  r       fj lq suvwx z
-                     ia
-                     sq
-
-		     

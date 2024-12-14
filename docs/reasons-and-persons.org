@@ -3,20 +3,29 @@
 
 * Reasons
 
-(household-consumables .
-  (groceries
-   clothes
-   health-and-cosmetics
-  )
 
-(domestic-supply .
-  (water
-   electricity
-   gas
-   internet
-   streaming
-   cloud
-  )
+(household
+ (consumables .
+  (groceries
+  clothes
+  tailoring
+   health-and-cosmetics
+   furnishings
+
+)
+   (services
+   therapy
+   vet))
+
+(domestic-supply 
+    (water
+     electricity
+     gas
+     internet
+     streaming
+     cloud
+     )
+
 
 (insurance .
   life
@@ -25,17 +34,25 @@
   travel
 )
   
-(news-and-entertainment .
+(entertainment .
    news
    eating-out
+   fun
+   )
    
 (transport .
-  train
+  public-transport
   bike
-  car
+  (car . (parking fuel maintenance tax insurance)
   air
   )
+
   
+(pets .
+vet)
+
+  
+cash?
 mortgage
 tax
 

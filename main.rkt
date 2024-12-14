@@ -2,15 +2,13 @@
 #lang racket/base
 
 (require gregor
-         "statements.rkt"
          "readers/first-direct.rkt")
 
 (module+ main
 
-  ;; Load and parse a single statement
-  (define *dir* "data/statements/joint")
-  (define *statement* "6976_2023-04-01_2023-06-30.csv")
+  (define the-statement
+    (dynamic-require "data/statements/first-direct-geddesdealmeida.rkt" 'statement))
 
-  (first-direct (build-path *dir* *statement*))
+  (printf "\n\n~a transactions parsed" (length (statement-entries the-statement)))
   
   )

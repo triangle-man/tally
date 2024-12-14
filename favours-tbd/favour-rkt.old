@@ -1,0 +1,84 @@
+;; -*- fill-column: 102 -*-
+#lang racket/base
+
+(require racket/contract
+         gregor)
+
+(provide
+ 
+ (contract-out
+  (struct person  ;; person - One end of a favour
+    ([name string?]
+     [kind symbol?]
+     [minimum-balance integer?])
+    #:transparent))
+         reason?
+         period?
+         (struct-out favour)
+         (struct-out transaction)
+         make-standard-transaction
+         )
+
+;; ---------------------------------------------------------------------------------------------------
+;; Persons
+
+;; A person is individuated by a string
+;; 
+(struct person (name kind minimum-balance) #:transparent)
+
+
+;; ---------------------------------------------------------------------------------------------------
+;; Reasons
+
+;; A reason is a list of symbols
+(define (reason? v)
+  (and (list? v)
+       (andmap symbol? v)))
+
+
+;; ---------------------------------------------------------------------------------------------------
+;; Periods
+
+;; A period is either a date or a pair of dates
+;; If a pair of dates, then upper may be 'any or 'some
+;; Otherwise, lower <= upper must hold
+
+(define (period? x)
+  (or (date? x)
+      (and (pair? x)
+           (date? (car x))
+           (date? (cdr x)))))
+
+
+;; ---------------------------------------------------------------------------------------------------
+;; Favours and transactions
+
+
+;; A favour is a creditor, a debitor, a reason, an amount, and a period
+;;
+;; It represents a transfer from the creditor to the debitor. An upper limit of 'some or 'any in the
+;; period represents a time arbitrarily far in the future. The difference is that 'some means that the
+;; creditor gets to choose; 'any means that the debtor gets to choose.
+;;  
+
+(struct favour (cr dr reason amount period) #:transparent)
+
+;; A transaction is a list of favours such that each persons' transactions balance
+
+(struct transaction (favours) #:transparent)
+
+
+;; A standard transaction is when a buyer receives a favour from a seller, using payment via an
+;; intermediary.
+(define (make-standard-transaction
+         #:buyer  buyer
+         #:seller seller
+         #:intermediary intermediary
+         #:reason reason
+         #:amount amt
+         #:date   date)
+  (transaction
+   (list
+    (favour seller buyer reason amt date)
+    (favour intermediary seller null amt (cons date 'any))
+    (favour buyer intermediary null amt (cons date 'any)))))  

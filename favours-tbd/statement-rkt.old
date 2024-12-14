@@ -1,0 +1,47 @@
+;; -*- fill-column: 102; -*-
+#lang racket/base
+
+(require gregor)
+
+#|
+
+Statements
+
+A statement is a set of partial transactions containing favours from the perspective of a particular
+person. A raw statement is one where the other side(s) of the transactions or the reason may be
+uncertain. (This is the case with most bank statements, for example.)
+
+Statements guarantee to be a complete record of transactions involving that person within a a
+particular range of dates.
+
+|#
+
+(provide (struct-out raw-favour)
+         (struct-out raw-statement)
+         (struct-out statement))
+
+;; Raw favours are a generic structure that read the minimal data we expect in any
+;; downloaded file and retain person-specific entries as a list of strings.
+
+;; date : date?
+;; cr?  : boolean? Is this person the creditor in this transaction?
+;; amt  : integer? In pence!
+;; desc : [List-of string?] -- person-specific extra information
+
+(struct raw-favour (date amt cr? desc) #:transparent)
+
+;; Raw statements are
+;; entries : a list of raw favours
+;; start   : the earliest ... 
+;; end     : ... and the latest dates 
+
+(struct raw-statement (entries start end) #:transparent)
+
+;; A statement is
+;; entries    : a list of transactions
+;; start, end : earliest and latest dates
+
+(struct statement (entries start end) #:transparent)
+
+
+
