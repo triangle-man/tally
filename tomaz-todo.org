@@ -1,0 +1,169 @@
+#+title: Tally
+
+* Instructions for Tomaz
+
+** Phase I
+
+*** Problem statement
+
+The problem statement is: “Read a directory containing one or more
+downloaded statements from a single bank account and create a set of
+transactions. Summarise these transactions by month.”
+
+A “transaction” is a technical term, defined below.
+
+*** Comments
+
+I've made a start at reading first direct statements with the code in
+~tally/readers/first-direct.rkt~
+
+For now, I'm looking for just total in and total out (by month) for
+this one bank account. However, I'd like to do it using the "proper"
+double-entry accounting model.
+
+Here is an example line from the csv:
+
+#+begin_example
+25/03/2024,SAINSBURYS S/MKTS BALHAM,-35.00,10000.00
+#+end_example
+
+This is a payment to Sainsbury's for £35.00, after which the account
+balance is £10,000.00. (That's not the actual balance but this is a
+public repo.) Lines representing my salary, say, will be positive. The
+account balance is reported after every transaction -- if you are
+reading multiple CSVs, they are a useful error check to ensure there
+were not missing dates between downloads, or duplicate entries. 
+
+*** Double-entry model
+
+1. In this model, everything is related to "accounts". I would like
+   four accounts. They are:
+
+   ~'joint~
+   ~'debt~
+   ~'income~
+   ~'expense~
+
+   Those are their symbolic, unique identifiers. Later, they may have
+   long names but I don't need that yet.
+
+2. Every line in the bank statement needs to be interpreted as a
+   /transaction/ between accounts. In principle, a transaction can
+   involve more than two accounts but I think in Phase I every
+   transaction will in fact involve exactly two accounts.
+
+3. A /amount/ is a pair of non-negative numbers. (See ~account.rkt~
+   for some thinking on this.) Sometimes I might write the pair as
+   (dr, cr) where those terms are pronounced "debit" and "credit".
+
+   To add two amounts, add their corresponding elements. 
+
+   It is usually okay to think of an amount (a, 0) as a "positive
+   number", a, and an amount (0, b) as a "negative number", -b. An
+   amount (a, 0) is a "debit" and and amount (0, b) is a "credit".
+
+   However, "debit" and "credit" can over-used and can be confusing!
+   In particular, you should not think of a "debit" necessarily as a
+   positive amount, or a "credit" as an increase in something.
+
+   I am actually representing money using exact integers, representing
+   the amount in pence.
+
+4. A /transaction/ is a set of accounts and amounts. The total amounts
+   must "balance," in the sense that the sum of the amounts must look
+   like (x, x). All individual amounts will be either (a, 0) or (0,
+   b).
+
+   For example, the example above is this transaction:
+
+
+| Account    | Amount   |
+|------------+----------|
+| ~'joint~   | (0, 35)  |
+| ~'expense~ | (35, 0)  |
+|------------+----------|
+|            | (35, 35) |
+
+*** Details
+
+So ... how do you know (a) which accounts to include in each
+transaction and (b) which is a debit and which a credit?
+
+The rules are as follows:
+
+1. Any transfer /from/ the bank account should be interpreted as an
+   expense. The transaction will look like the following, where X is
+   the amount of the expense. 
+
+| Account    | Amount |
+|------------+--------|
+| ~'joint~   | (0, X) |
+| ~'expense~ | (X, 0) |
+|------------+--------|
+|            | (X, X) |
+
+2. Any transfer /to/ the bank account should be interpreted as an
+   income. The transaction will look like: 
+
+| Account   | Amount |
+|-----------+--------|
+| ~'joint~  | (X, 0) |
+| ~'income~ | (0, X) |
+|-----------+--------|
+|           | (X, X) |
+
+In Phase I, there will be no transactions involving 'debt.
+
+*** Summarising the accounts
+
+To summarise the accounts, we make two different tabulations. These
+are done for each time period, say a month. One is the "balance
+sheet". 
+
+It looks like:
+
+| Balance Sheet | Mar 23 | Apr 23 | May 23 |
+|---------------+--------+--------+--------|
+| *Assets*      |        |        |        |
+| - ~'joint~    |        |        |        |
+|---------------+--------+--------+--------|
+| *Liabilities* |        |        |        |
+| - ~'debt~     |        |        |        |
+|---------------+--------+--------+--------|
+| Total         |        |        |        |
+
+For each, we write down the value of the accounts at the end of the
+month. The value is the value at the end of the previous month, plus
+all the transactions. (We "normalise" the transactions, so that, for
+example, (X,Y) becomes (0,Y-X) (when Y>X) or (X-Y,0) (when X>Y). And
+then we just report either X-Y or Y-X, whichever is positive.)
+
+For the first month, we need to know the balance at the end of the
+previous month. For the joint account, that's written on the
+statement. For the debt, we have to know. (But there aren't any debts
+in Phase I).
+
+The other is the "income statement". It looks like:
+
+| Income statement | Mar 23 | Apr 23 | May 23 |
+|------------------+--------+--------+--------|
+| *Income*         |        |        |        |
+| - ~'income~      |        |        |        |
+|------------------+--------+--------+--------|
+| *Expense*        |        |        |        |
+| - ~'expense~     |        |        |        |
+|------------------+--------+--------+--------|
+| Total            |        |        |        |
+
+It's the same construction as the balance sheet, only we just add up
+the transactions within the month.
+
+Some quick bits of terminology: There are two /kinds/ of account:
+*Nominal* accounts (which are income and expense) and *Real* accounts
+(assets and liabilities). These kinds determine whether you're on the
+balance sheet or the income statement.
+
+Then, eventually, all acccounts will have a type, which we used to
+make a nice hierarchy for the purpose of making these tables. For now,
+we simply have *Income*, *Expense*, *Assets*, and *Libailites*, and we
+only have one account of each type.
