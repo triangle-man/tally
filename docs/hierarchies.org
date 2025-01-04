@@ -1,0 +1,81 @@
+I am confused about the organisation of accounts into a hierarchy --
+or anyway how to represent this. 
+
+What seems reasonable is that we want the balance sheet report to look
+something like this:
+
+#+begin_example
+Assets
+= Current assets
+  - Bank accounts
+    . «first direct joint account»
+    . «first direct ISA»
+  - Cash
+    . «Foreign currency reserves»
+= Fixed assets
+  - Pensions
+    . «DECC»
+  - Property
+    . «House»
+
+Liabilities
+    ...
+#+end_example
+
+I've indicated the “accounts” by the «» symbols. You can see that
+accounts are grouped into a hierarchy depending on what kind of
+account they are. ("Assets" are things you have. "Current assets" are
+things that you can turn into cash readily, as opposed to "fixed
+assets" which are things that might take you some time to convert to
+cash.)
+
+Note that accounts, here, are a different /kind/ of thing from the
+levels in the hierarchy. "Bank accounts" is a level in the hierarchy;
+the "first direct joint account" is an account. The accounts are the
+atomic units of transactions. Every transaction is a movement of value
+between particular accounts. You can't have a transaction which just
+says "£30 to /a/ bank account", you have to say /which/ bank account.
+
+The alternative approach would be to say that all these things are
+accounts. Some accounts are just "leaves of the tree", and others are
+"accounts that are aggregations of accounts." (It's possible that this
+is actually done in finance because one does speak of the "chart of
+accounts.") I don't think that's the right way to do things, for two
+reasons. One is the reason just mentioned: it doesn't feel right to
+move money into "bank accounts" or "fixed assets", so somehow the
+leaves of the tree are different to the other nodes. The other reason
+is that actually there are alternative ways to group accounts. (For
+example, one sometimes groups assets into "tangible assets" and
+"intangible assets"; or into "operating assets" and "non-operating
+assets".) The hierarchy can change depending on how one wants to do
+the reporting, but the underlying movement of value between accounts
+stays the same.
+
+However, it turns out that the same problem has returned. You see, I
+also don't like the idea of having a level (like "Current assets")
+which "contains" a mixture of accounts and other levels. I think
+levels should either split into sublevels (those sublevels providing a
+/complete/ decomposition of the level) or contain accounts. I don't
+want to have the alternative because then you end up with
+auto-generated levels called things like "Current assets, not
+elsewhere specified" which means "it's a current asset, but it's not a
+bank account, nor a pension." Well, what is it?!
+
+It's like if you grouped things by their colour. You might only
+differentiate "red", "blue" and so on. But, once you start subdividing
+kinds of red, you need to cover all the reds. (Maybe.) 
+
+So it turns out that the leaves of the hierarchy are still different
+from the rest of it, because only the leaves contain accounts.  
+
+
+
+
+
+
+
+
+ 
+
+    
+
