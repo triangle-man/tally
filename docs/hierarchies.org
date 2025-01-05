@@ -51,12 +51,12 @@ assets".) The hierarchy can change depending on how one wants to do
 the reporting, but the underlying movement of value between accounts
 stays the same.
 
-However, it turns out that the same problem has returned. You see, I
+However, it turns out that I haven't exorcised the problem. You see, I
 also don't like the idea of having a level (like "Current assets")
-which "contains" a mixture of accounts and other levels. I think
-levels should either split into sublevels (those sublevels providing a
-/complete/ decomposition of the level) or contain accounts. I don't
-want to have the alternative because then you end up with
+that "contains" a mixture of accounts and other levels. I think levels
+should either split into sublevels (those sublevels providing a
+/complete/ decomposition of the level) or contain accounts but not
+both. I don't like the alternative because then you end up with
 auto-generated levels called things like "Current assets, not
 elsewhere specified" which means "it's a current asset, but it's not a
 bank account, nor a pension." Well, what is it?!
@@ -66,7 +66,11 @@ differentiate "red", "blue" and so on. But, once you start subdividing
 kinds of red, you need to cover all the reds. (Maybe.) 
 
 So it turns out that the leaves of the hierarchy are still different
-from the rest of it, because only the leaves contain accounts.  
+from the rest of it, because only the leaves contain accounts.
+
+So ... what is the right data structure for this system? The basic
+idea is that there is a tree (of levels), and there are accounts, and
+each account is "characterised by" a leaf of the tree.
 
 
 
